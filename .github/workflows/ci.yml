@@ -26,12 +26,35 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Configure Maven settings for JFrog
+      run: |
+        mkdir -p ~/.m2
+        cat > ~/.m2/settings.xml <<EOF
+        <settings>
+          <servers>
+            <server>
+              <id>evinced-repository</id>
+              <username>\${env.JFROG_USER}</username>
+              <password>\${env.JFROG_PW}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+      env:
+        JFROG_USER: ${{ secrets.JFROG_USER }}
+        JFROG_PW: ${{ secrets.JFROG_PW }}
+
     - name: Build with Maven
       run: mvn clean compile -B
+      env:
+        JFROG_USER: ${{ secrets.JFROG_USER }}
+        JFROG_PW: ${{ secrets.JFROG_PW }}
 
     - name: Run tests
       run: mvn test -B
       env:
+        JFROG_USER: ${{ secrets.JFROG_USER }}
+        JFROG_PW: ${{ secrets.JFROG_PW }}
         EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
         EVINCED_AUTH_TOKEN: ${{ secrets.EVINCED_AUTH_TOKEN }}
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
