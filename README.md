@@ -1,5 +1,7 @@
 # java-selenium-sdk
 
+![CI](https://github.com/Kris-Evinced/java-selenium-sdk/actions/workflows/ci.yml/badge.svg)
+
 Evinced setup example with additional configuration for Debug logging available in Evinced Web SDK v4.9.3
 Developer Docs: https://developer.evinced.com/sdks-for-web-apps/selenium-java-sdk#getstarted
 
